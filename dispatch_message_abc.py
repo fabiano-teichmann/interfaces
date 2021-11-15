@@ -10,8 +10,8 @@ class Dispatch(ABC):
         """Send msg"""
 
     @abstractmethod
-    def confirm_received(self):
-        """Message can be confimed received"""
+    def confirm_receive(self):
+        """Message can be confim receive"""
 
 
 @dataclass
@@ -36,6 +36,7 @@ class DispatchEmail(Dispatch):
         return f"Reply message to {self.message.cco}"
 
 
+
 @dataclass
 class DispatchSMS(Dispatch):
     """This class implement all method of the interface Dispatch"""
@@ -50,5 +51,5 @@ class DispatchSMS(Dispatch):
         payload = self.build_payload()
         return f"Send SMS {payload}"
 
-    def confirm_received(self) -> str:
+    def confirm_receive(self) -> str:
         return f"{self.message.to} receive SMS"

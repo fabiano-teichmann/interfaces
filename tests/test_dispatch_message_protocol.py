@@ -18,7 +18,7 @@ class TestDispatchMessageProtocol:
     def test_send_email_should_raise_when_method_confirm_receive_not_implemented(self):
         with pytest.raises(
             AttributeError,
-            match="DispatchEmail' object has no attribute 'confirm_received",
+            match="DispatchEmail' object has no attribute 'confirm_receive",
         ):
             send_email(
                 MessageEmail(

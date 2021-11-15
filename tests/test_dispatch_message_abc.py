@@ -13,7 +13,7 @@ class TestDispatchMessageABC:
     def test_send_email_should_raise_exception(self):
         with pytest.raises(
             TypeError,
-            match="Can't instantiate abstract class DispatchEmail with abstract method confirm_received",
+            match="Can't instantiate abstract class DispatchEmail with abstract method confirm_receive",
         ):
             DispatchEmail(
                 MessageEmail(

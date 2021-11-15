@@ -5,11 +5,11 @@ from schema import MessageSMS, MessageEmail
 
 
 class Dispatch(Protocol):
-    def send(self) -> None:
+    def send(self) -> str:
         """Send msg"""
 
-    def confirm_received(self):
-        """Message can be confimed received"""
+    def confirm_receive(self) -> str:
+        """Message can be confirm receive"""
 
 
 @dataclass
@@ -26,7 +26,7 @@ class DispatchEmail:
             "message": self.message.message,
         }
 
-    def send(self):
+    def send(self) -> str:
         payload = self.build_payload()
         return f"Sender email {payload}"
 
@@ -48,7 +48,7 @@ class DispatchSMS:
         payload = self.build_payload()
         return f"Send SMS {payload}"
 
-    def confirm_received(self) -> str:
+    def confirm_receive(self) -> str:
         return f"{self.message.to} receive SMS"
 
 
@@ -56,19 +56,19 @@ class DispatchSMS:
 class InterfaceDispatchMessage:
     dispatch: Dispatch
 
-    def send(self) -> None:
+    def send(self) -> str:
         """call function to send message"""
         return self.dispatch.send()
 
-    def confirm_received(self) -> None:
+    def confirm_receive(self) -> str:
         "Receive confimation message"
-        return self.dispatch.confirm_received()
+        return self.dispatch.confirm_receive()
 
 
 def send_sms(msg: MessageSMS) -> None:
     dispatch_sms = InterfaceDispatchMessage(DispatchSMS(msg))
     print(dispatch_sms.send())
-    print(dispatch_sms.confirm_received())
+    print(dispatch_sms.confirm_receive())
 
 
 def send_email(
@@ -79,7 +79,7 @@ def send_email(
     print(dispatch_email.send())
     if confirm_received:
         """Raise error when call confirm_received because is not implemented"""
-        print(dispatch_email.confirm_received())
+        print(dispatch_email.confirm_receive())
     elif reply_message:
         print(dispatch_email.reply_message())
     print("not call confirm_received and reply_message ")
